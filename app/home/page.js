@@ -3,7 +3,8 @@ import NavBar from "../components/NavBar/NavBar";
 import Features from "../components/Features/Features";
 import Footer from "../components/Footer/Footer";
 import Product from "../components/Product/Product";
-import State from "../wireropemanufacturers/page";
+import State from "../state/page";
+
 
 
 
@@ -14,8 +15,9 @@ const HomePage = () => {
        <Landing/>
        <Features/>
        <Product/>
-       <Footer/>
        <State/>
+       <Footer/>
+      
     </div>
   );
 }
