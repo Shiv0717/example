@@ -1,5 +1,3 @@
-'use client';
-import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 const categories = [
@@ -8,28 +6,31 @@ const categories = [
   'cement-manufacturers'
 ];
 
-const State = () => {
-  const [states, setStates] = useState([]);
+async function fetchStates() {
+  try {
+    const response = await fetch('https://bestwebsitedesigningcompanyinindia.com/dynamic_api/api/state_list', {
+      cache: 'no-store', // Prevents caching and fetches fresh data
+    });
 
-  useEffect(() => {
-    const fetchStates = async () => {
-      try {
-        const response = await fetch('https://bestwebsitedesigningcompanyinindia.com/dynamic_api/api/state_list');
-        const result = await response.json();
-        setStates(result);
-      } catch (error) {
-        console.error('Error fetching states:', error);
-      }
-    };
+    if (!response.ok) {
+      throw new Error('Failed to fetch states');
+    }
 
-    fetchStates();
-  }, []);
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching states:', error);
+    return [];
+  }
+}
+
+export default async function StatePage() {
+  const states = await fetchStates();
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
       <h1 className="text-4xl font-bold mb-6">Select a Category and State</h1>
       {states.length === 0 ? (
-        <p>Loading states...</p>
+        <p>No states available</p>
       ) : (
         categories.map((category) => (
           <div key={category} className="mb-8">
@@ -48,6 +49,4 @@ const State = () => {
       )}
     </div>
   );
-};
-
-export default State;
+}
